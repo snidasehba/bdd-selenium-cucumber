@@ -1,7 +1,7 @@
 # BDD UI Tests with Selenium and Cucumber
 
 Behaviour-driven UI tests written in **Gherkin** and automated with **Java 17**, **Selenium 4**,
-**Cucumber** and **TestNG**. Scenarios run in parallel, locally in Chrome or in **GitLab CI** against a
+**Cucumber** and **TestNG**. Scenarios run in parallel, locally in Chrome or in **GitHub Actions** (a GitLab CI file is included too) against a
 Selenium standalone Chrome container.
 
 The application under test is [The Internet](https://the-internet.herokuapp.com), a public practice
@@ -26,7 +26,7 @@ src/test/java/com/nidasehba/bdd/
   pages/                            page objects; BasePage wraps explicit waits
   steps/                            step definitions + Hooks (screenshot on failure, driver lifecycle)
   runner/CucumberRunner.java        TestNG runner, scenarios in parallel
-.gitlab-ci.yml                      Maven job with a selenium/standalone-chrome service
+.github/workflows/ci.yml            GitHub Actions job with a selenium/standalone-chrome service (also .gitlab-ci.yml)
 ```
 
 ## Run it
