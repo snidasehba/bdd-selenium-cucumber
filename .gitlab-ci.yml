@@ -1,0 +1,32 @@
+# Scenarios run against a Selenium standalone Chrome container started as a CI service.
+stages:
+  - test
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+  SELENIUM_REMOTE_URL: "http://selenium:4444/wd/hub"
+  # let the container serve the 3 parallel scenarios at once
+  SE_NODE_MAX_SESSIONS: "3"
+  SE_NODE_OVERRIDE_MAX_SESSIONS: "true"
+
+cache:
+  key: maven
+  paths:
+    - .m2/repository
+
+bdd-tests:
+  stage: test
+  image: maven:3.9-eclipse-temurin-17
+  services:
+    - name: selenium/standalone-chrome:4.25.0
+      alias: selenium
+  script:
+    - mvn -B test
+  artifacts:
+    when: always
+    paths:
+      - target/cucumber-report.html
+      - target/cucumber.json
+      - target/surefire-reports/
+    reports:
+      junit: target/surefire-reports/TEST-*.xml
